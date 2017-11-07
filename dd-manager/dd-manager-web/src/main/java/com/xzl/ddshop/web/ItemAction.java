@@ -1,19 +1,24 @@
 package com.xzl.ddshop.web;
 
+import com.xzl.ddshop.common.dto.Page;
+import com.xzl.ddshop.common.dto.Result;
 import com.xzl.ddshop.pojo.po.TbItem;
+import com.xzl.ddshop.pojo.vo.TbItemCustom;
 import com.xzl.ddshop.service.ItemService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @Scope("prototype")
 public class ItemAction
 {
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private ItemService itemService;
 
@@ -24,9 +29,20 @@ public class ItemAction
         return itemService.getById(itemId);
     }
 
-    @RequestMapping("/{page}")
-    public String page(@PathVariable("page") String page)
+    @ResponseBody
+    @RequestMapping("/items")
+    public Result<TbItemCustom> listItem(Page page)
     {
-        return page;
+        Result<TbItemCustom> result = null;
+        try {
+             result = itemService.listItemsByPage(page);
+
+        }catch (Exception e)
+        {
+            logger.error(e.getMessage(),e);
+            e.printStackTrace();
+        }
+        return result;
     }
+
 }
