@@ -10,17 +10,47 @@
 
   <select id="countItems" resultType="_int">
     select count(1)
-    from tb_item
+    from tb_item as i
+    where i.status !=3
   </select>
 
-  <select id="listItemsByPage" parameterType="com.xzl.ddshop.common.dto.Page" resultType="com.xzl.ddshop.pojo.vo.TbItemCustom">
+  <select id="listItemsByPage" resultType="com.xzl.ddshop.pojo.vo.TbItemCustom">
     SELECT
     <include refid="Base_Column_List" />
     FROM tb_item i
-    LEFT JOIN tb_item_cat c
-    ON i.cid = c.id
-    ORDER BY i.id DESC
-    LIMIT #{offset},#{rows}
+    LEFT JOIN tb_item_cat c ON i.cid = c.id
+    where i.status !=3
+    <choose>
+      <when test="order !=null and order.sort!=null and order.order!=null and order.orderParams != null">
+--         ORDER BY CONVERT(i.${order.sort} using gbk) ${order.order}
+
+        <foreach collection="order.orderParams" item="item" open="order by" close="" separator=",">
+
+            <if test="item.indexOf('title')!=-1">
+                <if test="item.indexOf('asc')!=-1">
+                    CONVERT (i.title using gbk) asc
+                </if>
+                <if test="item.indexOf('asc')==-1">
+                    CONVERT (i.title using gbk) DESC
+                </if>
+            </if>
+            <if test="item.indexOf('title')==-1">
+                <if test="item.indexOf('asc')!=-1">
+                    i.id ASC
+                </if>
+                <if test="item.indexOf('asc')==-1">
+                    i.id DESC
+                </if>
+            </if>
+        </foreach>
+
+      </when>
+      <otherwise>
+        ORDER BY i.id DESC
+      </otherwise>
+    </choose>
+
+    LIMIT #{page.offset},#{page.rows}
   </select>
 
 </mapper>

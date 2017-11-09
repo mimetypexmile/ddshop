@@ -53,6 +53,12 @@
 
 <!-- 自定义脚本 -->
 <script src="js/common.js"></script>
+
+<%--引入日期处理库--%>
+<script src="js/moment/moment-with-locales.js"></script>
+<script>
+    moment.locale('zh-cn');
+</script>
 <!-- 自定义js -->
 <script>
     ddshop.registerMenuEvent();

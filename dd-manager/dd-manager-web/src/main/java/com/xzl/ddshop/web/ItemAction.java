@@ -1,10 +1,12 @@
 package com.xzl.ddshop.web;
 
+import com.xzl.ddshop.common.dto.Order;
 import com.xzl.ddshop.common.dto.Page;
 import com.xzl.ddshop.common.dto.Result;
 import com.xzl.ddshop.pojo.po.TbItem;
 import com.xzl.ddshop.pojo.vo.TbItemCustom;
 import com.xzl.ddshop.service.ItemService;
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,11 +33,11 @@ public class ItemAction
 
     @ResponseBody
     @RequestMapping("/items")
-    public Result<TbItemCustom> listItem(Page page)
+    public Result<TbItemCustom> listItem(Page page,Order order)
     {
         Result<TbItemCustom> result = null;
         try {
-             result = itemService.listItemsByPage(page);
+             result = itemService.listItemsByPage(page,order);
 
         }catch (Exception e)
         {
@@ -45,4 +47,11 @@ public class ItemAction
         return result;
     }
 
+
+    @RequestMapping(value = "/items/batch",method = RequestMethod.POST)
+    @ResponseBody
+    public int updateItemsByIds(@RequestParam("ids[]") List<Long>  ids)
+    {
+        return itemService.updateItemsByIds(ids);
+    }
 }

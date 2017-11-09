@@ -1,10 +1,12 @@
 package com.xzl.ddshop.service.impl;
 
+import com.xzl.ddshop.common.dto.Order;
 import com.xzl.ddshop.common.dto.Page;
 import com.xzl.ddshop.common.dto.Result;
 import com.xzl.ddshop.dao.TbItemCustomMapper;
 import com.xzl.ddshop.dao.TbItemMapper;
 import com.xzl.ddshop.pojo.po.TbItem;
+import com.xzl.ddshop.pojo.po.TbItemExample;
 import com.xzl.ddshop.pojo.vo.TbItemCustom;
 import com.xzl.ddshop.service.ItemService;
 import org.slf4j.Logger;
@@ -30,13 +32,13 @@ public class ItemServiceImpl implements ItemService
     }
 
     @Override
-    public Result<TbItemCustom> listItemsByPage(Page page)
+    public Result<TbItemCustom> listItemsByPage(Page page, Order order)
     {
         Result<TbItemCustom> result =null;
         try{
             result = new Result<>();
             int total = itemCustomDao.countItems();
-            List<TbItemCustom> rows = itemCustomDao.listItemsByPage(page);
+            List<TbItemCustom> rows = itemCustomDao.listItemsByPage(page,order);
             result.setTotal(total);
             result.setRows(rows);
         }catch (Exception e)
@@ -45,5 +47,15 @@ public class ItemServiceImpl implements ItemService
             e.printStackTrace();
         }
         return result;
+    }
+
+    @Override
+    public int updateItemsByIds(List<Long> ids) {
+        TbItem record = new TbItem();
+        record.setStatus((byte) 3);
+        TbItemExample example = new TbItemExample();
+        TbItemExample.Criteria criteria =example.createCriteria();
+        criteria.andIdIn(ids);
+        return itemDao.updateByExampleSelective(record,example);
     }
 }

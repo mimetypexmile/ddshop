@@ -1,7 +1,9 @@
 package com.xzl.ddshop.dao;
 
+import com.xzl.ddshop.common.dto.Order;
 import com.xzl.ddshop.common.dto.Page;
 import com.xzl.ddshop.pojo.vo.TbItemCustom;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -16,5 +18,5 @@ public interface TbItemCustomMapper
      */
     int countItems();
 
-    List<TbItemCustom> listItemsByPage(Page page);
+    List<TbItemCustom> listItemsByPage(@Param("page") Page page,@Param("order") Order order);
 }
