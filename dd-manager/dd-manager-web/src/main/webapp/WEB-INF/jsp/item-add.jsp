@@ -103,6 +103,8 @@
 <script>
     function clearForm() {
         $('#itemAddForm').form('clear');
+        $('#itemAddForm').form('reset');
+
     }
 
 </script>
