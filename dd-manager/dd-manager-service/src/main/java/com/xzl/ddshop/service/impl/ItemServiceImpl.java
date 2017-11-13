@@ -8,7 +8,6 @@ import com.xzl.ddshop.dao.TbItemMapper;
 import com.xzl.ddshop.pojo.po.TbItem;
 import com.xzl.ddshop.pojo.po.TbItemExample;
 import com.xzl.ddshop.pojo.vo.TbItemCustom;
-import com.xzl.ddshop.pojo.vo.TbItemQuery;
 import com.xzl.ddshop.service.ItemService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,13 +32,13 @@ public class ItemServiceImpl implements ItemService
     }
 
     @Override
-    public Result<TbItemCustom> listItemsByPage(Page page, Order order, TbItemQuery query)
+    public Result<TbItemCustom> listItemsByPage(Page page, Order order)
     {
         Result<TbItemCustom> result =null;
         try{
             result = new Result<>();
-            int total = itemCustomDao.countItems(query);
-            List<TbItemCustom> rows = itemCustomDao.listItemsByPage(page,order,query);
+            int total = itemCustomDao.countItems();
+            List<TbItemCustom> rows = itemCustomDao.listItemsByPage(page,order);
             result.setTotal(total);
             result.setRows(rows);
         }catch (Exception e)

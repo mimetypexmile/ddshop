@@ -8,21 +8,10 @@
      c.name as catName
   </sql>
 
-   <sql id="Where_Clause">
-       <where>
-           i.status!=3
-           <if test="query!=null and query.title!=null and query.title!=''">
-               and i.title like '%${query.title}%'
-           </if>
-           <if test="query!=null and query.status!=null and query.status!=0">
-               and i.status = #{query.status}
-           </if>
-       </where>
-   </sql>
   <select id="countItems" resultType="_int">
     select count(1)
     from tb_item as i
-    <include refid="Where_Clause"/>
+    where i.status !=3
   </select>
 
   <select id="listItemsByPage" resultType="com.xzl.ddshop.pojo.vo.TbItemCustom">
@@ -30,7 +19,7 @@
     <include refid="Base_Column_List" />
     FROM tb_item i
     LEFT JOIN tb_item_cat c ON i.cid = c.id
-      <include refid="Where_Clause"/>
+    where i.status !=3
     <choose>
       <when test="order !=null and order.sort!=null and order.order!=null and order.orderParams != null">
 --         ORDER BY CONVERT(i.${order.sort} using gbk) ${order.order}
@@ -54,11 +43,13 @@
                 </if>
             </if>
         </foreach>
+
       </when>
       <otherwise>
         ORDER BY i.id DESC
       </otherwise>
     </choose>
+
     LIMIT #{page.offset},#{page.rows}
   </select>
 

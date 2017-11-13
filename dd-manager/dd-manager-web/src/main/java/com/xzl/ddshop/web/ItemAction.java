@@ -5,7 +5,6 @@ import com.xzl.ddshop.common.dto.Page;
 import com.xzl.ddshop.common.dto.Result;
 import com.xzl.ddshop.pojo.po.TbItem;
 import com.xzl.ddshop.pojo.vo.TbItemCustom;
-import com.xzl.ddshop.pojo.vo.TbItemQuery;
 import com.xzl.ddshop.service.ItemService;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
@@ -34,11 +33,11 @@ public class ItemAction
 
     @ResponseBody
     @RequestMapping("/items")
-    public Result<TbItemCustom> listItem(Page page,Order order,TbItemQuery query)
+    public Result<TbItemCustom> listItem(Page page,Order order)
     {
         Result<TbItemCustom> result = null;
         try {
-             result = itemService.listItemsByPage(page,order,query);
+             result = itemService.listItemsByPage(page,order);
 
         }catch (Exception e)
         {

@@ -3,7 +3,6 @@ package com.xzl.ddshop.dao;
 import com.xzl.ddshop.common.dto.Order;
 import com.xzl.ddshop.common.dto.Page;
 import com.xzl.ddshop.pojo.vo.TbItemCustom;
-import com.xzl.ddshop.pojo.vo.TbItemQuery;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -17,7 +16,7 @@ public interface TbItemCustomMapper
      * 查询商品表中的所有的记录的数量
      * @return
      */
-    int countItems(@Param("query") TbItemQuery query);
+    int countItems();
 
-    List<TbItemCustom> listItemsByPage(@Param("page") Page page,@Param("order") Order order,@Param("query")TbItemQuery query);
+    List<TbItemCustom> listItemsByPage(@Param("page") Page page,@Param("order") Order order);
 }
