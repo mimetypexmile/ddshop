@@ -49,48 +49,23 @@
 <!-- jquery easyui -->
 <script src="js/jquery-easyui-1.5/jquery.easyui.min.js"></script>
 <script src="js/jquery-easyui-1.5/locale/easyui-lang-zh_CN.js"></script>
-
-
-<!-- 自定义脚本 -->
-<script src="js/common.js"></script>
-
 <%--引入日期处理库--%>
 <script src="js/moment/moment-with-locales.js"></script>
 <script>
     moment.locale('zh-cn');
 </script>
+
+<!-- ueditor配置文件 -->
+<script type="text/javascript" src="js/ueditor/ueditor.config.js"></script>
+<!-- ueditor编辑器源码文件 -->
+<script type="text/javascript" src="js/ueditor/ueditor.all.js"></script>
+
+
+<!-- 自定义脚本 -->
+<script src="js/common.js"></script>
 <!-- 自定义js -->
 <script>
     ddshop.registerMenuEvent();
-//    $(function () {
-//        //约定大于配置：jquery对象前面加上$,如果是DOM对象不需要加$
-//        var $tree = $('#menu .easyui-tree');
-//        //将当前树打印到控制台
-//        //console.log($tree);
-//        $tree.tree({
-//            onClick:function(node){
-//                var href = node.attributes.href;//item-add
-//                var text = node.text;
-////                debugger;
-//
-//                if($('#tab').tabs('exists',text))
-//                {
-//                    $('#tab').tabs('select',text);
-//                }else {
-//                    $('#tab').tabs('add',{
-//                        title: text,
-//                        href: href,
-//                        closable:true
-//                    });
-//                }
-////                $('#tab').tabs('add',{
-////                    title: text,
-////                    href: href,
-////                    closable:true
-////                });
-//            }
-//        });
-//    });
 </script>
 </body>
 </html>
